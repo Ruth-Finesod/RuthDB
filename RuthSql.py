@@ -46,17 +46,14 @@ class RuthSql:
 
     def execute(self, query: str):
         """
-        match query to sql query and execute it if match
-        :param query: sql query
+        match query to SQL query and execute it if match
+        :param query: SQL query
         :return: the return from the function that was executed
         """
-        flag = False
         for statement_name, regex in self.STATEMENTS.items():
             if regex.findall(query):
-                flag = True
                 return getattr(self, statement_name)(regex.findall(query)[0])
-        if not flag:
-            raise NoSuchStatementError
+        raise NoSuchStatementError
 
     def select(self, table_name: str) -> list[list[str]]:
         """
